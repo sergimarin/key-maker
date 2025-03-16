@@ -1,11 +1,101 @@
 ---
-import Welcome from '../components/Welcome.astro';
-import Layout from '../layouts/Layout.astro';
-
-// Welcome to Astro! Wondering what to do next? Check out the Astro documentation at https://docs.astro.build
-// Don't want to use any of this? Delete everything in this file, the `assets`, `components`, and `layouts` directories, and start fresh.
+import Password from "../components/Password.astro";
+import Options from "../components/Options.astro";
+import Layout from "../layouts/Layout.astro";
 ---
 
 <Layout>
-	<Welcome />
+    <div class="bg-white p-8 rounded-lg shadow-xl w-full max-w-4xl">
+        <div class="mb-8">
+            <h2 class="text-2xl font-bold text-center mb-4">
+                Generador de Contraseñas
+            </h2>
+            <div class="relative">
+                <Password />
+            </div>
+        </div>
+
+        <div class="flex flex-col md:flex-row gap-6">
+            <div class="bg-gray-200 p-6 rounded-lg flex-1">
+                <p class="text-lg text-gray-700 prose prose-invert mt-8">
+                    Genera contraseñas únicas y seguras al instante. Una
+                    contraseña fuerte debe ser larga, combinar mayúsculas y
+                    minúsculas, incluir números y símbolos. Personaliza tu clave
+                    para mayor seguridad.
+                </p>
+            </div>
+
+            <div class="bg-gray-200 p-6 rounded-lg flex-1">
+                <h3 class="text-xl font-semibold mb-4">
+                    Opciones de personalización
+                </h3>
+
+                <Options />
+            </div>
+        </div>
+    </div>
 </Layout>
+
+<script>
+    import { Notyf } from "notyf";
+    import "notyf/notyf.min.css";
+
+    const length = document.getElementById("length") as HTMLInputElement;
+    const lengthValue = document.getElementById(
+        "lengthValue",
+    ) as HTMLInputElement;
+    const password = document.getElementById("password") as HTMLInputElement;
+
+    length.addEventListener("input", function () {
+        lengthValue.textContent = length.value;
+    });
+
+    generate();
+
+    document.querySelectorAll("#length, input").forEach((element) => {
+        element.addEventListener("change", function () {
+            generate();
+        });
+    });
+
+    document.getElementById("copy")!.addEventListener("click", function () {
+        password.select();
+        document.execCommand("copy");
+
+        const notyf = new Notyf();
+        notyf.success("¡Copiada correctamente!");
+    });
+
+    document.getElementById("regenerate")!.addEventListener("click", function () {
+       generate();
+    });
+
+
+    function generate() {
+        const uppercase = (
+            document.getElementById("uppercase") as HTMLInputElement
+        ).checked;
+        const lowercase = (
+            document.getElementById("lowercase") as HTMLInputElement
+        ).checked;
+        const numbers = (document.getElementById("numbers") as HTMLInputElement)
+            .checked;
+        const symbols = (document.getElementById("symbols") as HTMLInputElement)
+            .checked;
+
+        let chars = "";
+        if (uppercase) chars += "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+        if (lowercase) chars += "abcdefghijklmnopqrstuvwxyz";
+        if (numbers) chars += "0123456789";
+        if (symbols) chars += "!@#$%^&*()_+[]{}|;:,.<>?";
+
+        let passwordString = "";
+        for (let i = 0; i < Number(length.value); i++) {
+            passwordString += chars.charAt(
+                Math.floor(Math.random() * chars.length),
+            );
+        }
+
+        password.value = passwordString;
+    }
+</script>

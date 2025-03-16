@@ -1,7 +1,7 @@
 {
   "name": "key-maker",
   "type": "module",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "scripts": {
     "dev": "astro dev",
     "build": "astro build",
@@ -9,6 +9,13 @@
     "astro": "astro"
   },
   "dependencies": {
-    "astro": "^5.5.2"
+    "@tailwindcss/typography": "^0.5.16",
+    "@tailwindcss/vite": "^4.0.14",
+    "astro": "^5.5.2",
+    "tailwindcss": "^4.0.14"
+  },
+  "devDependencies": {
+    "@types/notyf": "^3.0.0",
+    "notyf": "^3.10.0"
   }
 }
