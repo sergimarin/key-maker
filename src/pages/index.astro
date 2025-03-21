@@ -13,6 +13,12 @@ import Layout from "../layouts/Layout.astro";
             <div class="relative">
                 <Password />
             </div>
+
+            <p
+                id="security-indicator"
+                class="mt-2 text-center text-lg font-semibold"
+            >
+            </p>
         </div>
 
         <div class="flex flex-col md:flex-row gap-6">
@@ -66,10 +72,11 @@ import Layout from "../layouts/Layout.astro";
         notyf.success("¡Copiada correctamente!");
     });
 
-    document.getElementById("regenerate")!.addEventListener("click", function () {
-       generate();
-    });
-
+    document
+        .getElementById("regenerate")!
+        .addEventListener("click", function () {
+            generate();
+        });
 
     function generate() {
         const uppercase = (
@@ -97,5 +104,39 @@ import Layout from "../layouts/Layout.astro";
         }
 
         password.value = passwordString;
+        evaluatePassword(passwordString);
+    }
+
+    function evaluatePassword(password: string) {
+        let score = 0;
+
+        if (password.length >= 8) score++;
+        if (password.length >= 12) score++;
+        if (/[A-Z]/.test(password)) score++;
+        if (/[a-z]/.test(password)) score++;
+        if (/\d/.test(password)) score++;
+        if (/[^A-Za-z0-9]/.test(password)) score++;
+
+        const indicator = document.getElementById("security-indicator");
+
+        if (indicator) {
+            if (score <= 2) {
+                indicator.textContent = "⊗ Débil";
+                indicator.className = "";
+                indicator.classList.add("text-red-500");
+            } else if (score <= 4) {
+                indicator.textContent = "⚠️ Normal";
+                indicator.className = "";
+                indicator.classList.add("text-yellow-500");
+            } else if (score <= 5) {
+                indicator.textContent = "✅ Fuerte";
+                indicator.className = "";
+                indicator.classList.add("text-green-500");
+            } else {
+                indicator.textContent = "🔒 Muy segura";
+                indicator.className = "";
+                indicator.classList.add("text-blue-500");
+            }
+        }
     }
 </script>
