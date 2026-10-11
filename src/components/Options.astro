@@ -1,29 +1,77 @@
-<div class="mb-4">
-    <label class="block text-lg font-medium text-gray-700" for="length"
-        >Longitud: <span id="lengthValue">12</span></label
-    >
-    <input
-        type="range"
-        id="length"
-        name="length"
-        min="4"
-        max="32"
-        value="12"
-        class="w-full"
-    />
+---
+const sets = [
+    { id: "uppercase", label: "Mayúsculas", ex: "A–Z" },
+    { id: "lowercase", label: "Minúsculas", ex: "a–z" },
+    { id: "numbers", label: "Números", ex: "0–9" },
+    { id: "symbols", label: "Símbolos", ex: "!@#" },
+];
+---
+
+<div class="seg mb-8" role="radiogroup" aria-label="Tipo de contraseña">
+    <label>
+        <input type="radio" name="mode" value="chars" checked />
+        <span>Caracteres</span>
+    </label>
+    <label>
+        <input type="radio" name="mode" value="words" />
+        <span>Frase de paso</span>
+    </label>
 </div>
 
-<div class="space-y-3">
-    <label class="flex items-center text-lg">
-        <input type="checkbox" id="uppercase" name="uppercase" checked class="mr-2" /> Mayúsculas
-    </label>
-    <label class="flex items-center text-lg">
-        <input type="checkbox" id="lowercase" name="lowercase" checked class="mr-2" /> Minúsculas
-    </label>
-    <label class="flex items-center text-lg">
-        <input type="checkbox" id="numbers" name="numbers" checked class="mr-2" /> Números
-    </label>
-    <label class="flex items-center text-lg">
-        <input type="checkbox" id="symbols" name="symbols" checked class="mr-2" /> Símbolos
-    </label>
+<div id="chars-opts">
+    <div class="mb-8">
+        <div class="flex items-end justify-between">
+            <label for="length" class="font-semibold">Longitud</label>
+            <span id="lengthValue" class="text-7xl font-medium leading-none tabular-nums">16</span>
+        </div>
+        <input type="range" id="length" name="length" min="4" max="32" value="16" class="mt-2" />
+    </div>
+
+    <div>
+        {sets.map((s) => (
+            <label class="row">
+                <input type="checkbox" id={s.id} name={s.id} checked />
+                <span>{s.label}<span class="ex">{s.ex}</span></span>
+                <span class="switch"></span>
+            </label>
+        ))}
+        <label class="row">
+            <input type="checkbox" id="ambiguous" name="ambiguous" />
+            <span>Evitar ambiguos<span class="ex">O 0 l 1 I</span></span>
+            <span class="switch"></span>
+        </label>
+    </div>
+</div>
+
+<div id="words-opts" hidden>
+    <div class="mb-8">
+        <div class="flex items-end justify-between">
+            <label for="wordcount" class="font-semibold">Palabras</label>
+            <span id="wordcountValue" class="text-7xl font-medium leading-none tabular-nums">6</span>
+        </div>
+        <input type="range" id="wordcount" name="wordcount" min="3" max="10" value="6" class="mt-2" />
+    </div>
+
+    <div>
+        <label class="row" for="separator">
+            <span>Separador</span>
+            <select id="separator" name="separator">
+                <option value="-">Guion  -</option>
+                <option value=".">Punto  .</option>
+                <option value="_">Guion bajo  _</option>
+                <option value=" ">Espacio</option>
+                <option value="">Ninguno</option>
+            </select>
+        </label>
+        <label class="row">
+            <input type="checkbox" id="capitalize" name="capitalize" />
+            <span>Primera letra en mayúscula</span>
+            <span class="switch"></span>
+        </label>
+        <label class="row">
+            <input type="checkbox" id="addnumber" name="addnumber" />
+            <span>Añadir un número<span class="ex">00–99</span></span>
+            <span class="switch"></span>
+        </label>
+    </div>
 </div>
