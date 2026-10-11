@@ -4,11 +4,21 @@ Generador de contraseñas seguras y aleatorias.
 
 ## 📋 Características
 
-- Contraseñas seguras y aleatorias en un clic
-- Longitud personalizable (de 4 a 32 caracteres)
-- Opciones avanzadas: letras, números y caracteres especiales
-- Diseño intuitivo y fácil de usar
-- Funciona en cualquier dispositivo (PC, móvil y tablet)
+- Dos modos: **Caracteres** y **Frase de paso** (palabras en español)
+- Generación con `crypto.getRandomValues` (aleatoriedad criptográfica, sin sesgo de módulo)
+- Modo caracteres:
+  - Longitud personalizable (de 4 a 32)
+  - Mayúsculas, minúsculas, números y símbolos (siempre incluye al menos uno de cada tipo marcado)
+  - Opción para evitar caracteres ambiguos (`O 0 l 1 I`)
+- Modo frase de paso:
+  - De 3 a 10 palabras de un diccionario en español (sin tildes ni ñ, fácil de teclear)
+  - Separador configurable (guion, punto, guion bajo, espacio o ninguno)
+  - Primera letra en mayúscula y número final opcionales
+- Indicador de seguridad (Débil, Normal, Fuerte, Muy segura) con entropía en bits y tiempo estimado para romperla
+- Colores distintos para letras, números y símbolos
+- Atajos de teclado: `Espacio` o `R` para regenerar, `C` para copiar
+- Copia al portapapeles con un clic
+- Diseño de dos columnas, responsive (PC, móvil y tablet)
 
 ## ⚙️ Instalación
 
